@@ -1,0 +1,3 @@
+Regex:	.*a.*
+Bug:	abcd
+Length: 5

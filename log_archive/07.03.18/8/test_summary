@@ -1,0 +1,4 @@
+Regex:	.*[a-m].*
+Bug:	abcde
+Runs:	10
+Length: 10
