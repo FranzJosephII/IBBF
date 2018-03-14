@@ -1,4 +1,5 @@
 import random, string
+import numpy
 
 class nn_interface:
     """
@@ -8,6 +9,15 @@ class nn_interface:
         self.system = system
         self._MAXLENGTH = _MAXLENGTH
         self._MAXWORDLENGTH = int(_MAXLENGTH/5)
+
+        self.probs = []
+        sum = 0
+        for i in range(1, self._MAXWORDLENGTH + 1):
+            self.probs.append(26 ** i)
+            sum += self.probs[-1]
+
+        for i in range(0, self._MAXWORDLENGTH):
+            self.probs[i] /= sum
 
     """
     #######################
@@ -24,7 +34,6 @@ class nn_interface:
         """
         Returns a training batch
         """
-
         while(42):
             samples = []
             labels = []
@@ -118,7 +127,8 @@ class nn_interface:
         Returns a random string
         """
         letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for i in range(random.randint(1, self._MAXWORDLENGTH)))
+        #return ''.join(random.choice(letters) for i in range(random.randint(1, self._MAXWORDLENGTH)))
+        return ''.join(random.choice(letters) for j in range(numpy.random.choice(numpy.arange(1, 6), p=self.probs)))
 
 
     """
@@ -133,4 +143,8 @@ class nn_interface:
         return self.system.match(sample)
 
     def queries(self):
+        """
+        Returns the current amount of queries which has been used
+        :return:
+        """
         return self.system.queries

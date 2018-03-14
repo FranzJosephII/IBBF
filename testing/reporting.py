@@ -155,8 +155,6 @@ for j in range(test_amount):
             if not (data[1] == "START" or data[1] == "FOUND" or data[1] == "FAILED"):
                 x.append(int(data[0]))
                 y.append(float(data[1]))
-        #if len(y) > 0:
-        #    y[0] = 0
 
         if len(x) > 2:
             diff = x[1]-(x[2]-x[1])
@@ -193,15 +191,11 @@ for j in range(test_amount):
                 x.append(int(data[0]))
                 y.append(float(data[1]))
 
-        #print(x)
         # Clean data:
         if len(x) > 2:
             diff = x[1]-(x[2]-x[1])
             for v in range(1, len(x)):
                 x[v] = x[v] - diff
-        #print(x)
-
-        #sys.exit()
 
         x_sum.append(x)
         y_sum.append(y)

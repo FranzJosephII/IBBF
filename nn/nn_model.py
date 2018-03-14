@@ -4,10 +4,14 @@ import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 class classificator:
+    """
+    Implements a neural network which is used as a binary classificator
+    """
 
     def __init__(self, _MAXLENGTH, interface, reportfile):
         """
-        Defines the structure and calculation model of a GAN
+        Defines the structure and calculation model the neural network.
+        The size of the layers and the parameters depend on the maximum length and are initialized dynamically
         """
 
         self.reportfile = reportfile
@@ -30,20 +34,6 @@ class classificator:
         from_x2h = 1/math.sqrt(x2h_nodes)
         from_h = 1/math.sqrt(h_nodes)
         from_h2o = 1/math.sqrt(h2o_nodes)
-
-        #print(x_nodes)
-        #print(from_x)
-        #print(x2h_nodes)
-        #print(from_x2h)
-        #print(h_nodes)
-        #print(from_h)
-        #print(h2o_nodes)
-        #print(from_h2o)
-        #print(o_nodes)
-
-
-        #sys.exit()
-
 
         # Define Layers
         self.X = tf.placeholder(tf.float32, shape=[None, x_nodes])
@@ -86,18 +76,29 @@ class classificator:
 
     def train(self, data):
         """
-        Trains the model with given dataset (list of samples)
+        Trains the model with given dataset (list of samples and labels)
+        :param data: A list of samples and labels which are used to train the network
+        :return: summary: The Loss in a tensorboard-readable form
+                 loss: The current Loss as a float value
         """
         samples, labels = data
-        summary, placeholder = self.sess.run([self.summary_op, self.train_op], feed_dict={self.X: samples, self.Y: labels})
-        return summary
+        summary, loss, placeholder = self.sess.run([self.summary_op, self.loss, self.train_op], feed_dict={self.X: samples, self.Y: labels})
+        return summary, loss
 
     def calculate(self, sample):
-        return self.sess.run(self.model, feed_dict={self.X: sample})[0][0]
+        """
+        Classifies the given list of samples
+        :param sample: list of samples to be classified
+        :return: a list of floats which are the probabilities that the given samples are in the class
+        """
+        return self.sess.run(self.model, feed_dict={self.X: sample})
 
     def evaluate(self, data):
         """
         Calculates the accuracy of the model and returns it
+        The evaluation data is either given by the data parameter or is calculated the first time the method is called
+        :param data: dataset against which the neural network should be evaluated
+        :return: the current accuracy of the model
         """
         amount = 10000
         if data == None:

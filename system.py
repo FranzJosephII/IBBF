@@ -24,10 +24,6 @@ class system:
         else:
             self.regex = re.compile(_REGEX)
 
-        # Uncomment to set difficulty of regex
-        #while(self.calc_regex_difficulty() > 0.5 or self.calc_regex_difficulty() < 0.05):
-        #    self.regex = re.compile(self.generate_regex())
-
         # Define Bug
         if _BUG == None:
             letters = string.ascii_lowercase
@@ -84,13 +80,6 @@ class system:
             f.close()
             sys.exit()
 
-        #elif self.queries > 10000000:
-        #    if self._DEBUG: print("Reached maximum of allowed samples")
-        #    f = open(self.reportfile, 'a')
-        #    f.write(str(self.queries) + ";FAILED\n")
-        #    f.close()
-        #    sys.exit()
-
         if self.regex.match(sample):
             return 1
         else:
@@ -140,7 +129,6 @@ class system:
             if var == 1:
                 return regex
             if var == 2:
-                #return "^" + regex + "$"
                 return ".*" + regex + ".*"
             if var == 3:
                 return ".*" + regex + ".*"

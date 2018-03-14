@@ -5,10 +5,11 @@ import lstar.TableModules.optimizedTable as t
 import lstar.CQModules.randomCQ as cq
 import os
 
-"""
-Implements the l* algorithm, returns a DFSM
-"""
+
 class lstar_fuzzer:
+    """
+    Implements a lstar based black-box-fuzzer
+    """
     def __init__(self, system, _MAX_LEN, _DEBUG, reportfile):
         self.system = system
         self._MAX_LEN = _MAX_LEN
@@ -31,8 +32,9 @@ class lstar_fuzzer:
         self.CQModule = cq.CQModule(ObjectClass, MQModule, parser, debugFlag, self._MAX_LEN, testFlag, DFSM_output)
 
     def start(self):
-        #self.algorithm()
-        #"""
+        """
+        Starts the lstar fuzzer which then learns and starts a fuzzing session after each conjecture-query
+        """
         try:
             self.algorithm()
         except SystemExit:
@@ -42,14 +44,13 @@ class lstar_fuzzer:
             try:
                 os.remove(self.reportfile)
             except:
-                print("")
-            #f = open(self.reportfile, 'w')
-            #f.write("TEST FAILED")
-            #f.close()
+                pass
             return
-        #"""
 
     def algorithm(self):
+        """
+        Implementation of the basic lstar-algorithm
+        """
         # Algorithm
         while 42 == 42:
             self.tableModule.fixTable()

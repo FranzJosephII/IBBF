@@ -8,7 +8,7 @@ import sys
 
 class nn_fuzzer:
     """
-    Implementation of a GAN which fuzzes the given system
+    Implementation of a neural-network based black-box-fuzzer
     """
     def __init__(self, system, _MAXLENGTH, _DEBUG, reportfile):
 
@@ -23,68 +23,76 @@ class nn_fuzzer:
         self.nn = neuralnetwork.classificator(self._MAXLENGTH, self.itf, reportfile)
 
         self.accuracy = []
-        self.epoch_acc = [-4, -3, -2, -1, 0]
-        self.strikes = 0
-
-        self.false_positives = []
 
     def start(self):
+        """
+        Starts the execution of the neural network. First trains the network and then starts fuzzing the system with
+        calculated fuzzing samples
+        """
         # Initial training phase
         if self._DEBUG: print("Start Training ...")
-        while(float(self.epoch_acc[-1]) < 1. and self.epoch_acc[len(self.epoch_acc)-1] > self.epoch_acc[len(self.epoch_acc)-5]):
-            self.train(None)
-
+        self.train()
 
         # Start Fuzzing
         if self._DEBUG: print("\nQueries used during training: " + str(self.sys.queries) + "\n\nStart Fuzzing ...")
         while(42):
-            fuzz_sample = self.itf.get_random_string()
-            # if calculated sample acceptance is below average or the sample is a known false positive skip fuzzing
-            if self.nn.calculate([self.itf.calcvector(fuzz_sample)]) < 0.5 or fuzz_sample in self.false_positives:
-                continue
-            # if the sample is a false positive add it to a list
-            if self.itf.membership_query(fuzz_sample) == 0:
-                if self._DEBUG: print("False Positive: " + fuzz_sample)
-                self.false_positives.append(fuzz_sample)
-                continue
+            print("New Test phase")
+            # generate Batch
+            fuzz_sample_batch = []
+            fuzz_vector_batch = []
+            for i in range(1000000):
+                fuzz_sample = self.itf.get_random_string()
+                fuzz_sample_batch.append(fuzz_sample)
+                fuzz_vector_batch.append(self.itf.calcvector(fuzz_sample))
+
+            # test samples against network
+            calculated_labels = self.nn.calculate(fuzz_vector_batch)
+
+            # query the positive samples
+            for i in range(len(calculated_labels)):
+                if calculated_labels[i] > 0.5:
+                    self.itf.membership_query(fuzz_sample_batch[i])
 
 
-    def train(self, input):
-        self.strikes = 0
+    def train(self):
+        """
+        Trains the network until the accuracy is good enough
+        """
 
-        if input == None:
-            while (42 == 42):
-                data = self.itf.get_training_batch(self._BATCH_SIZE)
-                for i in range(10): self.summaries.append(self.nn.train(data))
-                acc = self.nn.evaluate(None)
-                self.accuracy.append(acc)
-                if self.evaluate_learning_rate():
-                    break
-        else:
-            data = input
-            for i in range(10): self.summaries.append(self.nn.train(data))
-
-
+        while (42 == 42):
+            data = self.itf.get_training_batch(self._BATCH_SIZE)
+            losses = []
+            while(42):
+                summary, loss = self.nn.train(data)
+                self.summaries.append(summary)
+                losses.append(loss)
+                if len(losses) > 20:
+                    if losses[-1] / losses[-2] > 0.99:
+                        break
+            acc = self.nn.evaluate(None)
+            self.accuracy.append(acc)
+            if self.evaluate_learning_rate():
+                break
 
     def evaluate_learning_rate(self):
+        """
+        Evaluates wheter the training phase should be stopped or not depending on the current accuracy of the model
+        :return: bool
+        """
 
-        if len(self.accuracy) < 10:
+        if self._DEBUG: print("Accuracy: " + str(self.accuracy[-1]))
+
+        if self.accuracy[-1] > 0.999:
+            return True
+
+        if len(self.accuracy) < 20:
             return False
 
-        difference = 0
-        pos = len(self.accuracy)-1
-        for i in range(9):
-            difference += (self.accuracy[pos-i]-self.accuracy[pos-(i+1)])
+        diff = self.accuracy[-1] - self.accuracy[-20]
 
-        if difference <= 0:
-            self.strikes += 1
-
-        if self.strikes > 10:
-            self.epoch_acc.append(self.accuracy[len(self.accuracy)-1])
-            if self._DEBUG: print("Current Accuracy: " + str(self.accuracy[len(self.accuracy)-1]) + "\nQueries used so far: " + str(self.sys.queries))
+        if (diff < 0.0001 and diff > -0.0001 and diff != 0):
             return True
         return False
-
 
     def print_loss(self):
         """

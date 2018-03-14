@@ -1,8 +1,8 @@
 import random
 import time
 from lstar.IBBFPrintModules import lstar_printer
-# try:
 import lstar.IBBFPrintModules.lstar_drawer as lstar_drawer
+import numpy
 
 drawer = 1
 
@@ -26,10 +26,18 @@ class CQModule:
 
         self.accs = [0]
 
-        # parameter = params.split(",")
-
-        # self.tries = int(parameter[0])
         self.length = _MAX_LEN
+
+        print(_MAX_LEN)
+
+        self.probs = []
+        sum = 0
+        for i in range(1, self.length + 1):
+            self.probs.append(26 ** i)
+            sum += self.probs[-1]
+
+        for i in range(0, self.length):
+            self.probs[i] /= sum
 
     def getTime(self):
         return self._TIME_
@@ -49,7 +57,7 @@ class CQModule:
 
         # Generate random example
         example = []
-        for j in range(0, random.randint(0, self.length - 1)):
+        for j in range(0, numpy.random.choice(numpy.arange(1, 6), p=self.probs)):
             example.append(A[random.randint(0, len(A) - 1)].identifier[0])
 
         # Calculate membership according to own DFSM
@@ -152,7 +160,7 @@ class CQModule:
 
             while (amount * 9 / 10 > neg and amount * 9 / 10 > pos and amount > (neg + pos)):
                 example = []
-                for j in range(0, random.randint(0, self.length - 1)):
+                for j in range(0, numpy.random.choice(numpy.arange(1, 6), p=self.probs)):
                     example.append(A[random.randint(0, len(A) - 1)].identifier[0])
                 query = self.ObjectClass.IBBFObj('')
                 for a in example:
@@ -178,7 +186,7 @@ class CQModule:
                 for i in range(amount - neg - pos):
                     while(42):
                         example = []
-                        for j in range(0, random.randint(0, self.length - 1)):
+                        for j in range(0, numpy.random.choice(numpy.arange(1, 6), p=self.probs)):
                             example.append(A[random.randint(0, len(A) - 1)].identifier[0])
                         query = self.ObjectClass.IBBFObj('')
                         for a in example:
@@ -195,7 +203,7 @@ class CQModule:
                 for i in range(amount - neg - pos):
                     while (42):
                         example = []
-                        for j in range(0, random.randint(0, self.length - 1)):
+                        for j in range(0, numpy.random.choice(numpy.arange(1, 6), p=self.probs)):
                             example.append(A[random.randint(0, len(A) - 1)].identifier[0])
                         query = self.ObjectClass.IBBFObj('')
                         for a in example:
