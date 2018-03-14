@@ -22,7 +22,7 @@ class lstar_fuzzer:
         DFSM_output = "logs/result.png"
 
         # parse Alphabet
-        parser = ap.AlphabetParser("C:/Users/AGANDO/PycharmProjects/IBBF/alphabet", ObjectClass)
+        parser = ap.AlphabetParser("C:/Users/AGANDO/PycharmProjects/IBBF/lstar/APModules/alphabet", ObjectClass)
         A = parser.getAlphabet()
 
         # Init Modules

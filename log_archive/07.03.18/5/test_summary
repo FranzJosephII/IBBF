@@ -1,4 +1,0 @@
-Regex:	.*a.{2}a.*
-Bug:	azza
-Runs:	10
-Length: 5
