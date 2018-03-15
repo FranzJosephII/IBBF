@@ -2,7 +2,7 @@ from collections import defaultdict
 import os
 import webbrowser
 import importlib
-import lstar.graphviz as gv
+import lstar.addons.graphviz as gv
 
 #import graphviz as gv
 

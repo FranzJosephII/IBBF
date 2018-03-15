@@ -1,7 +1,7 @@
 import random
 import time
-from lstar.IBBFPrintModules import lstar_printer
-import lstar.IBBFPrintModules.lstar_drawer as lstar_drawer
+from lstar.addons.IBBFPrintModules import lstar_printer
+import lstar.addons.IBBFPrintModules.lstar_drawer as lstar_drawer
 import numpy
 
 drawer = 1

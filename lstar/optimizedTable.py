@@ -1,8 +1,8 @@
-from lstar.APModules import alphabet_parser
-from lstar.IBBFObjects import basicObject
-from lstar.MQModules import interface
-from lstar.CQModules import randomCQ
-from lstar.IBBFPrintModules import lstar_printer
+from lstar.addons import alphabet_parser
+from lstar.addons.IBBFObjects import basicObject
+from lstar import interface
+from lstar import randomCQ
+from lstar.addons.IBBFPrintModules import lstar_printer
 import sys
 import time
 

@@ -1,8 +1,8 @@
-import lstar.APModules.alphabet_parser as ap
-import lstar.IBBFObjects.basicObject as ObjectClass
-import lstar.MQModules.interface as mq
-import lstar.TableModules.optimizedTable as t
-import lstar.CQModules.randomCQ as cq
+import lstar.addons.alphabet_parser as ap
+import lstar.addons.IBBFObjects.basicObject as ObjectClass
+import lstar.interface as mq
+import lstar.optimizedTable as t
+import lstar.randomCQ as cq
 import os
 
 
@@ -23,7 +23,7 @@ class lstar_fuzzer:
         DFSM_output = "logs/result.png"
 
         # parse Alphabet
-        parser = ap.AlphabetParser("C:/Users/AGANDO/PycharmProjects/IBBF/lstar/APModules/alphabet", ObjectClass)
+        parser = ap.AlphabetParser("C:/Users/AGANDO/PycharmProjects/IBBF/lstar/addons/alphabet", ObjectClass)
         A = parser.getAlphabet()
 
         # Init Modules
