@@ -1,7 +1,9 @@
 import sys
 import nn.nn_main as class_nn
 import lstar.lstar_fuzzer as lstar
-import system as s
+import system.regular as regular
+import system.contextfree as contextfree
+import system.contextsensitive as contextsensitive
 
 _DEBUG = False
 
@@ -11,7 +13,9 @@ _MAXLENGTH = int(sys.argv[3])
 reportfile = sys.argv[4]
 method = sys.argv[5]
 
-system = s.system(_MAXLENGTH, _REGEX, _BUG, _DEBUG, reportfile)
+system = regular.system(_MAXLENGTH, _REGEX, _BUG, _DEBUG, reportfile)
+#system = contextfree.system(_MAXLENGTH, _BUG, _DEBUG, reportfile)
+#system = contextsensitive.system(_MAXLENGTH, _BUG, _DEBUG, reportfile)
 
 if method == "lstar":
     fuzzer = lstar.lstar_fuzzer(system, _MAXLENGTH, _DEBUG, reportfile)

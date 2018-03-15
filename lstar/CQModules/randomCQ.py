@@ -28,8 +28,6 @@ class CQModule:
 
         self.length = _MAX_LEN
 
-        print(_MAX_LEN)
-
         self.probs = []
         sum = 0
         for i in range(1, self.length + 1):
@@ -259,6 +257,7 @@ class CQModule:
             #else:
             #    print(False)
         acc = pos/amount
+        print("Accuracy: " + str(acc))
 
         f = open(reportfile, 'a')
         f.write(str(self.MQModule.queries()) + ";" + str(acc) + "\n")
