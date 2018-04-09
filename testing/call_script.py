@@ -1,10 +1,10 @@
 import os, sys
 import datetime
 
-#           1       2           3               4           5
-_REGEX = [  "a.*",  ".*a.*",    ".*[a-m].*",    ".*aa.*",   ".*a.{2}a.*"]
-_BUG = [    "abcd", "abcd",     "abcd",         "zaaz",     "azza"]
-_MAX_LEN = [5,      5,          5,             5,          5]
+#           1       2           3               4               5
+_REGEX = [  "a.*",  "[a-m].*",  ".*a.*",         ".*[a-m].*",   ".*[a-m]{4}.*" ]
+_BUG = [    "abcde","abcde",    "abcde",        "abcde",        "abcde"     ]
+_MAX_LEN = [5,      5,          5,              5,              5           ]
 
 testcases = len(_REGEX)
 run = 0

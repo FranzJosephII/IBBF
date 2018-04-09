@@ -257,7 +257,7 @@ class CQModule:
             #else:
             #    print(False)
         acc = pos/amount
-        print("Accuracy: " + str(acc))
+        #print("Accuracy: " + str(acc))
 
         f = open(reportfile, 'a')
         f.write(str(self.MQModule.queries()) + ";" + str(acc) + "\n")

@@ -128,7 +128,7 @@ class nn_interface:
         """
         letters = string.ascii_lowercase
         #return ''.join(random.choice(letters) for i in range(random.randint(1, self._MAXWORDLENGTH)))
-        return ''.join(random.choice(letters) for j in range(numpy.random.choice(numpy.arange(1, 6), p=self.probs)))
+        return ''.join(random.choice(letters) for j in range(numpy.random.choice(numpy.arange(1, self._MAXWORDLENGTH+1), p=self.probs)))
 
 
     """

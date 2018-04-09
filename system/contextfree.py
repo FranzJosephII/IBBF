@@ -39,7 +39,7 @@ class system:
         if self.queries == 0:
             self.start_time = time.time()
 
-        # End execution after certain time (5 minutes)
+        # End execution after certain time (2 hours)
         if (time.time() - self.start_time) > 60*120:
             if self._DEBUG: print("Reached maximum allowed time, stop execution")
             f = open(self.reportfile, 'a')
