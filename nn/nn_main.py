@@ -90,7 +90,7 @@ class nn_fuzzer:
 
         diff = self.accuracy[-1] - self.accuracy[-20]
 
-        if (diff < 0.0001 and diff > -0.0001 and diff != 0):
+        if (diff < 0.00001 and diff > -0.00001 and diff != 0):
             return True
         return False
 

@@ -8,7 +8,7 @@ import system.contextsensitive as contextsensitive
 _MAXLENGTH = 5  # Characters
 _DEBUG = True
 _REGEX = "a.*"  # If None randomly generated
-_BUG = "aaabb"  # If None randomly generated
+_BUG = "aajjz"  # If None randomly generated
 #_REGEX = None  # If None randomly generated
 #_BUG = None  # If None randomly generated
 reportfile = "testing\\logs\\dummy"

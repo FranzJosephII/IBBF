@@ -75,28 +75,46 @@ class system:
         Only for debugging
         Returns if a given sample is accepted or not
         """
-        if len(sample) % 3 != 0:
-            return False
+        ctr1 = 0
+        ctr2 = 0
+        ctr3 = 0
+        class1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+        class2 = ['j', 'k', 'l', 'm', 'n', 'o', 'p', 'q']
+        class3 = ['r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-        for i in range(len(sample)):
-            if len(sample) / 3 > i:
-                # print("1: " + sample[i])
-                if sample[i] != 'a':
-                    return False
-            elif (len(sample) / 3) * 2 > i:
-                # print("2: " + sample[i])
-                if sample[i] != 'b':
-                    return False
+        i = 0
+
+        while(i < len(sample)):
+            if sample[i] in class1:
+                ctr1 += 1
+                i += 1
             else:
-                # print("3: " + sample[i])
-                if sample[i] != 'c':
-                    return False
-        return True
+                break
+
+        while(i < len(sample)):
+            if sample[i] in class2:
+                ctr2 += 1
+                i += 1
+            else:
+                break
+
+        while(i < len(sample)):
+            if sample[i] in class3:
+                ctr3 += 1
+                i += 1
+            else:
+                return False
+
+        #print(ctr1)
+        #print(ctr2)
+        #print(ctr3)
 
 
+        if ctr1 >= ctr2 >= ctr3:
+            return True
+        return False
 
-
-
+#print(match("ajaz"))
 
 
 

@@ -92,11 +92,11 @@ class CQModule:
             for i in range(0, len(A)):
                 stateTransTable[(key, A[i].identifier[0])] = ttable[key][i]
 
-        if self.accs[-1] == 1. or self.accs[-1] < self.accs[-2]:
+        if self.accs[-1] == 1.:
             amount = 1000000000
-
-        # Calculate how many positive samples should be tested before switching to random samples
-        amount = len(A) * len(ttable) * 10000
+        else:
+            # Calculate how many positive samples should be tested before switching to random samples
+            amount = len(A) * len(ttable) * 10000
 
         # Generate examples and query them
         tries = 0
